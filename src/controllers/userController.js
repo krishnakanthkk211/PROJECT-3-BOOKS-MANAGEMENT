@@ -5,12 +5,14 @@ const createuser=async function(req,res){
     try{
         let data=req.body
         let{title,name,phone,email,password,address}=data
+        
         if(Object.keys(data).length==0)
         {return res.status(400).send({status:false,message:"enter data for create user"})}
         if(!title)
         {return res.status(400).send({status:false,message:"title is required"})}
         if(!name)
         {return res.status(400).send({status:false,message:"name is required"})}
+       
         if(!phone)
         {return res.status(400).send({status:false,message:"phone is required"})}
         if(!email)
@@ -45,4 +47,35 @@ const createuser=async function(req,res){
     {return res.status(400).send({status:false,message:err.message})}
 }
 
-module.exports={createuser}
+
+
+const login = async function (req, res) {
+    try {
+      let{email,password}= req.body
+      if(!email)
+        {return res.status(400).send({status:false,message:"email is required"})}
+      if(!password)
+        {return res.status(400).send({status:false,message:"password is required"})}
+      if(!isValidemail(email)){
+        return res.status(400).send({status:false, msg:"please give a valid email😟😟😟"})
+      }
+      if(!checkPassword(password)){
+        return res.status(400).send({status:false, msg:"please give a valid password😟😟😟"}) 
+      }
+  
+      const Data = await userModel.findOne({ email: email, password: password })
+  
+      if (!Data) {
+        return res.status(400).send({ status: false,msg: "emaile or the password is not corerct🤨🤨🤨" });
+      }
+      let token = jwt.sign( {userId: Data._id},"Neemo",{expireIn:"10min"})
+      res.status(201).send({ status: true, msg: token })
+    }
+    catch (error) {
+      res.status(500).send({ msg: error })
+    }
+  }
+
+
+ 
+module.exports={createuser,login}
