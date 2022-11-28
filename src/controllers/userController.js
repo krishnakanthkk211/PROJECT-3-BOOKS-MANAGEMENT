@@ -1,0 +1,48 @@
+const userModel=require("../models/userModel")
+const validator=require("../validators/validator")
+const{isValidemail,isValidphone,isValidname,checkPassword}=validator
+const createuser=async function(req,res){
+    try{
+        let data=req.body
+        let{title,name,phone,email,password,address}=data
+        if(Object.keys(data).length==0)
+        {return res.status(400).send({status:false,message:"enter data for create user"})}
+        if(!title)
+        {return res.status(400).send({status:false,message:"title is required"})}
+        if(!name)
+        {return res.status(400).send({status:false,message:"name is required"})}
+        if(!phone)
+        {return res.status(400).send({status:false,message:"phone is required"})}
+        if(!email)
+        {return res.status(400).send({status:false,message:"email is required"})}
+        if(!password)
+        {return res.status(400).send({status:false,message:"password is required"})}
+        if(!address)
+        {return res.status(400).send({status:false,message:"address is required"})}
+        let enums = userModel.schema.obj.title.enum;
+        if(!enums.includes(title))
+        {return res.status(400).send({status:false, message :"Please enter a valid title"})}
+        if(!isValidname(name))
+        {return res.status(400).send({status:false,message:"enter valid name"}) }
+        if(!isValidemail(email))
+        {return res.status(400).send({status:false,message:"enter valid email"})}
+        if(!isValidphone(phone))
+        {return res.status(400).send({status:false,message:"enter valid phone"})}
+        if(!checkPassword(password))
+        {return res.status(400).send({status:false,message:"enter valid password"})}
+        
+        let dublicateemail=await userModel.findOne({email:email}||{phone:phone})
+        if(dublicateemail)
+        {return res.status(400).send({status:false,message:"email already existed"})}
+        let dublicatephone=await userModel.findOne({phone:phone})
+        if(dublicatephone)
+        {return res.status(400).send({status:false,message:"phone already existed"})}
+
+        let userdata=await userModel.create(data)
+        res.status(201).send({status:true,message:"Success",data:userdata})
+    }
+    catch(err)
+    {return res.status(400).send({status:false,message:err.message})}
+}
+
+module.exports={createuser}

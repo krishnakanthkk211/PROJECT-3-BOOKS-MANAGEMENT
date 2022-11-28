@@ -1,6 +1,6 @@
 const mongoose=require('mongoose');
 
-const reviewScheema= mongoose.Schema({
+const reviewSchema= mongoose.Schema({
     bookId:{
         type: mongoose.Schema.Types.Mixed, 
         required: true, 
@@ -8,14 +8,17 @@ const reviewScheema= mongoose.Schema({
     },
     reviewedBy: { 
         type:String, required:true, 
-        default:'guest'},
+        default:'Guest'},
     rating:{
         type: Number,
          required: true
         },
-     review:String
-
+     review:String,
+   reviewedAt:{
+    type:String,
+    required:true
+   }
 
 }, {timestamp:true})
 
-module.exports= mongoose.model('review', reviewScheema)
+module.exports= mongoose.model('review',reviewSchema)

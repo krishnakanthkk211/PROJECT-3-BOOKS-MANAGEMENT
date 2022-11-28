@@ -1,14 +1,14 @@
 const mongoose=require('mongoose');
 
 
-const BookScheema= mongoose.Schema({
+const BookSchema= mongoose.Schema({
    title:{
     type: String,
-     require: true,
+     required: true,
       unique:true },
    excerpt:{
     type: String,
-     require: true},
+     required: true},
    userId:{
     ref: 'user',
     type: mongoose.Schema.Types.Mixed
@@ -29,13 +29,18 @@ const BookScheema= mongoose.Schema({
    reviews:{
     type:Number, 
     default: 0
-},
+    },
    isDeleted: {
-    type:boolean,
+    type:Boolean,
      default: false
     },
-   //releasedAt:{timestamp, require: true}
+   isDeletedAt:{ 
+      type:String
+   },
+   releasedAt:{
+      type:String
+   }
 
 },{timestamp:true});
 
-module.exports= mongoose.model('Book', BookScheema);
+module.exports= mongoose.model('Book',BookSchema);

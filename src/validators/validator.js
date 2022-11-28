@@ -3,11 +3,11 @@ const isValidemail = function (email) {
 }
 
 const isValidphone = function (phone) {
-    return /^([+]\d{2})?\d{10}$/.test(mobile);
+    return /^([+]\d{2})?\d{10}$/.test(phone);
 }
 
 function checkPassword(str) {
-    var re = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,14}$/;
+    var re = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,15}$/;
     return re.test(str);
 }
 
