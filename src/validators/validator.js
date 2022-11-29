@@ -32,15 +32,8 @@ const isValidpincode=function validatePIN (pincode) {
 const isValidISBN=function(ISBN) {
     return /^(?=(?:\D*\d){10}(?:(?:\D*\d){3})?$)[\d-]+$/.test(ISBN);
 }
-<<<<<<< HEAD
-module.exports={isValidemail,isValidphone,checkPassword, isValid,isValidpincode,isValidISBN}
-=======
+module.exports={isValidemail,isValidphone,checkPassword, isValid,isValidpincode,isEmpty,isValidISBN}
 
-const isEmpty = function (value) {
-    if (typeof value === "undefined" || value === null) return false;
-    if (typeof value === "string" && value.trim().length === 0) return false;
-    return true;
-};
 
-module.exports= { isValidemail,isValidphone,checkPassword, isValidname,isValidISBN , isEmpty}
->>>>>>> bdf3402abbe36362ec996249d321764fae858662
+
+

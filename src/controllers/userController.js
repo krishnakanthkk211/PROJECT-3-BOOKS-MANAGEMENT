@@ -1,8 +1,7 @@
 const jwt=require("jsonwebtoken")
-const jwt = require('jsonwebtoken')
 const userModel=require("../models/userModel")
 const validator=require("../validators/validator")
-const{isValidemail,isValidphone,isValid,checkPassword,isValidpincode}=validator
+const{isValidemail,isValidphone,isValid,checkPassword,isValidpincode,isEmpty}=validator
 const createuser=async function(req,res){
     try{
         let data=req.body
@@ -39,6 +38,8 @@ const createuser=async function(req,res){
         {return res.status(400).send({status:false,message:"address is required"})}
         if(Object.keys(address).length==0)
         {return res.status(400).send({status:false,message:"enter all fields of address"})}
+        if(!isEmpty(address)) 
+        return res.status(400).send({ status: false, msg: "address cannot be empty "}) 
         if(!street)
         {return res.status(400).send({status:false,msg:"street is required"})}
         if(!city)
@@ -49,11 +50,8 @@ const createuser=async function(req,res){
         if(!enums.includes(title))
         {return res.status(400).send({status:false, message :"Please enter a valid title"})}
         if(!isValid(name))
-        if(!isEmpty(address)) 
-      return res.status(400).send({ status: false, msg: "address cannot be empty "}) 
+        {return res.status(400).send({status:false,message:"enter valid name"})}
       
-        
-       
         if(!isValidemail(email))
         {return res.status(400).send({status:false,message:"enter valid email"})}
         if(!isValidphone(phone))
@@ -94,21 +92,20 @@ const login = async function (req, res) {
         {return res.status(400).send({status:false, msg:"please give a valid email😟😟😟"})}
       if(!checkPassword(password))
         {return res.status(400).send({status:false, msg:"please give a valid password😟😟😟"})} 
-      
-      if(!isValidemail(email)){
-        return res.status(400).send({status:false, msg:"please give a valid email"})
-      }
-      if(!checkPassword(password)){
-        return res.status(400).send({status:false, msg:"please give a valid password"}) 
-      }
   
       const Data = await userModel.findOne({ email: email, password: password })
       if (!Data) {
         return res.status(400).send({ status: false,msg: "emaile or the password is not corerct" });
       }
+
       let token = jwt.sign( {userId: Data._id},"Neemo",{expiresIn:"10min"})
-      res.status(200).send({ status: true, message:"login successfully" ,token:token})
+      let decode = jwt.decode(token, "Neemo")
+      const tokeniat = new Date(decode.iat * 1000).toLocaleString()
+      const tokenexp = new Date(decode.exp * 1000).toLocaleString()
+     
+      res.status(201).send({ status: true, message: "User logged in Successfully", data: { token: token,userId:decode.userId, iat: tokeniat, exp: tokenexp } })
     }
+    
     catch (error) {
       res.status(500).send({status:false, message: error })
     }
