@@ -9,5 +9,6 @@ const usercontroller=require("../controllers/userController")
 router.post("/register",usercontroller.createuser)
 router.post('/login', usercontroller.login);
 router.post("/books",bookcontrolller.createBooks)
+router.get("/books",bookcontrolller.getbooks)
 
 module.exports=router

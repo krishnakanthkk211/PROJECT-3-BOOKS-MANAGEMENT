@@ -20,4 +20,11 @@ const isValidname=function(name){
 const isValidISBN=function(ISBN) {
     return /^(?=(?:\D*\d){10}(?:(?:\D*\d){3})?$)[\d-]+$/.test(ISBN);
 }
-module.exports={isValidemail,isValidphone,checkPassword, isValidname,isValidISBN}
+
+const isEmpty = function (value) {
+    if (typeof value === "undefined" || value === null) return false;
+    if (typeof value === "string" && value.trim().length === 0) return false;
+    return true;
+};
+
+module.exports= { isValidemail,isValidphone,checkPassword, isValidname,isValidISBN , isEmpty}
