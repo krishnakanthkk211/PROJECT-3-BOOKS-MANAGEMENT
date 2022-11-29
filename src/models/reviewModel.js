@@ -1,4 +1,4 @@
-const mongoose=require('mongoose');
+const mongoose=require("mongoose");
 
 const reviewSchema= mongoose.Schema({
     bookId:{
@@ -7,7 +7,8 @@ const reviewSchema= mongoose.Schema({
         ref:'Book'
     },
     reviewedBy: { 
-        type:String, required:true, 
+        type:String, 
+        required:true, 
         default:'Guest'},
     rating:{
         type: Number,
@@ -21,4 +22,4 @@ const reviewSchema= mongoose.Schema({
 
 }, {timestamp:true})
 
-module.exports= mongoose.model('review',reviewSchema)
+module.exports= mongoose.model("review",reviewSchema)
