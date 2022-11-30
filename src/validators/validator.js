@@ -3,20 +3,18 @@ const isValidemail = function (email) {
 }
 
 const isValidphone = function (phone) {
-    return /^([+]\d{2})?^\d{10}$/.test(phone);
-  
-}
+    const phoneRegex =  /^(\+91[\-\s]?)?[0]?(91)?[6789]\d{9}$/.test(phone);
+    return phoneRegex
+  }
 
 function checkPassword(str) {
     var re = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,15}$/;
     return re.test(str);
 }
 
-
 const isValid=function(name){
     const value = /^[a-zA-Z( \)]{2,50}$/
     return value.test(name)
-
 }
 
 const isEmpty = function (value) {
@@ -32,7 +30,12 @@ const isValidpincode=function validatePIN (pincode) {
 const isValidISBN=function(ISBN) {
     return /^(?=(?:\D*\d){10}(?:(?:\D*\d){3})?$)[\d-]+$/.test(ISBN);
 }
-module.exports={isValidemail,isValidphone,checkPassword, isValid,isValidpincode,isEmpty,isValidISBN}
+
+const israting=function(rating){
+    return /^[1-5_\/\s,.-]+$/.test(rating)
+}
+
+module.exports={isValidemail,isValidphone,checkPassword, isValid,isValidpincode,isEmpty,isValidISBN ,israting}
 
 
 
