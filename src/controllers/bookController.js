@@ -104,7 +104,7 @@ const getbooks = async function (req, res) {
     return res.status(200).send({ status: true, message: 'Book list', data: data })
   }
   catch (error) {
-    return res.status(500).send({ status:false, messasge: error.message })
+    return res.status(500).send({ status: false, messasge: error.message })
   }
 }
 
@@ -164,7 +164,7 @@ const updateBook = async function (req, res) {
     return res.status(200).send(books)
   }
   catch (error) {
-    return res.status(500).send({ status:false ,message: error.message })
+    return res.status(500).send({ status: false, message: error.message })
   }
 }
 
@@ -187,3 +187,5 @@ const deleteBookById = async function (req, res) {
   }
 }
 module.exports = { createBooks, getbooks, getbooksParams, updateBook, deleteBookById }
+  
+

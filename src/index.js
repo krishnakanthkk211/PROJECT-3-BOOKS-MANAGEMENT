@@ -1,5 +1,5 @@
 const express=require("express")
-const {default :mongoose}=require("mongoose")
+const {default :  mongoose}=require("mongoose")
 const bodyparser=require("body-parser")
 const route=require("./routes/route.js")
 
