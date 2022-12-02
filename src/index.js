@@ -1,22 +1,22 @@
-const express=require("express")
-const {default :  mongoose}=require("mongoose")
-const bodyparser=require("body-parser")
-const route=require("./routes/route.js")
+const express = require("express")
+const { default: mongoose } = require("mongoose")
+const bodyparser = require("body-parser")
+const route = require("./routes/route.js")
 
-const app=express()
+const app = express()
 app.use(bodyparser.json())
-app.use(bodyparser.urlencoded({extended:true}))
+app.use(bodyparser.urlencoded({ extended: true }))
 
 mongoose.connect("mongodb+srv://bookManagement:doreamon@bookmanagecluster.2bamja3.mongodb.net/Group15Database"
-,
+    ,
 
-    {useNewUrlParser:true})
-.then(()=>console.log("Mongodb is connected"))
-.catch((err)=>console.log(err))
+    { useNewUrlParser: true })
+    .then(() => console.log("Mongodb is connected"))
+    .catch((err) => console.log(err))
 
-app.use("/",route)
+app.use("/", route)
 
 
-app.listen(process.env.PORT||3000,function(){
-    console.log("express app running on port"+(process.env.PORT||3000))
+app.listen(process.env.PORT || 3000, function () {
+    console.log("express app running on port" + (process.env.PORT || 3000))
 });

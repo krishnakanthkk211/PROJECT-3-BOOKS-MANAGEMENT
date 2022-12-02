@@ -10,9 +10,9 @@ const review= require("../controllers/reviewController")
 router.post("/register",usercontroller.createuser)
 router.post('/login', usercontroller.login);
 
-router.post("/books",middle.authenticate ,middle.authorize, bookcontrolller.createBooks)
-router.get("/books", bookcontrolller.getbooks)
-router.get("/books/:bookId",middle.authenticate,bookcontrolller.getbooksParams)
+router.post("/books", middle.authenticate, middle.authorize, bookcontrolller.createBooks)
+router.get("/books", middle.authenticate, bookcontrolller.getbooks)
+router.get("/books/:bookId",middle.authenticate, bookcontrolller.getbooksParams)
 router.put("/books/:bookId",middle.authenticate,middle.authorize, bookcontrolller.updateBook)
 router.delete("/books/:bookId",middle.authenticate, middle.authorize, bookcontrolller.deleteBookById)
  

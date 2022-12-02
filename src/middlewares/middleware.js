@@ -6,22 +6,21 @@ const bookModel = require('../models/bookModel');
 const authenticate = function (req, res, next) {
    try {
       const header = req.headers["x-api-token"]
-      if (header) {
+      if (!header) 
+         return res.status(404).send({ status: false, message: "Token Is Missing" })
+
          const verify = jwt.verify(header, "Neemo")
-         if (verify) {
+         if (!verify) 
+         return res.status(401).send({ status: false, message: "Invalid token" })
             req.verify = verify
             next()
-         }
-         else {
-            return res.status(401).send({ status: false, message: "Invalid token" })
-         }
-      }
-      else return res.status(404).send({ status: false, message: "Token Is Missing" })
+       
    }
    catch (err) {
       res.status(500).send({ status: false, message: err.message })
    }
 }
+
 
 const authorize = async function (req, res, next) {
    try {
