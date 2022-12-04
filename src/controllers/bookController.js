@@ -150,17 +150,8 @@ const updateBook = async function (req, res) {
 
      if (Object.keys(details).length == 0) {
       return res.status(400).send({ status: false, message: "Invalid request Please provide details" });}
-    if (!isEmpty(title))
-      return res.status(400).send({ status: false, message: "title cannot be empty " })
-    if (!isEmpty(excerpt))
-      return res.status(400).send({ status: false, message: "excerpt cannot be empty " })
-    if (!isEmpty(ISBN))
-      return res.status(400).send({ status: false, msg: "ISBN cannot be empty " })
-    if(!isEmpty(releasedAt))
-     return res.status(400).send({ status: false, msg: "releasedAt cannot be empty " })
-     if (!isValidISBN(ISBN)) {
-      return res.status(400).send({ status: false, msg: "ISBN number is not valid" })
-    }
+
+    
     const titleCheck = await bookModel.findOne({ title })
     if (titleCheck) {
       return res.status(400).send({ status: false, message: "title already registered ,please use different title" })

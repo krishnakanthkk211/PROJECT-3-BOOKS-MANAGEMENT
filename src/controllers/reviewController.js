@@ -55,9 +55,8 @@ const createReview = async function (req, res) {
         if (!book) {
             return res.status(404).send({ status: false, message: "Book not found or deleted" })
         }
-
-
         const newReview = await reviewModel.create(data)
+        
         const obj = {
             _id: newReview._id,
             bookId: newReview.bookId,
