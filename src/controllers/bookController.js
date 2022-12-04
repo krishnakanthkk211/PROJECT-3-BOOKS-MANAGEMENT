@@ -93,7 +93,7 @@ const getbooks = async function (req, res) {
       let bookdata = await bookModel.find({ isDeleted: false })
       if (!bookdata)
         return res.status(404).send({ status: false, message: "No Such books Found" })
-      return res.status(200).send({ message: "success", data: bookdata })
+      return res.status(200).send({ status:true,message: "success", data: bookdata })
     }
     
     let data = await bookModel.find({ $and: [queryParams, { isDeleted: false }] }).sort({ title: 1 })
@@ -164,7 +164,7 @@ const updateBook = async function (req, res) {
       { new: true })
 
     if (!books) return res.status(404).send({ status: false, message: "Book data not updated" })
-    return res.status(200).send({status:false,message:"Success",data:books})
+    return res.status(200).send({status:true,message:"Success",data:books})
   }
   catch (error) {
     return res.status(500).send({ status: false, message: error.message })
