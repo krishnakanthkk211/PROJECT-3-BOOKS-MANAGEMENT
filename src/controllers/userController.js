@@ -89,13 +89,13 @@ const createuser = async function (req, res) {
       return res.status(400).send({ status: false, message: "pincode should be of 6 numeric values" })
     }
 
-    let dubliempass=await userModel.findOne({$or:[{phone:phone},{email:email}]})
-
-    if(dubliempass.phone==phone)
-       return res.status(400).send({status:false,message:"phone already existed"})
-    if(dubliempass.email==email)
-       return res.status(400).send({status:false,message:"email already existed"})
-  
+    let dublicatephone=await userModel.findOne({phone:phone})
+    if(dublicatephone)
+      return res.status(400).send({status:false,message:"phone is already existed"})
+    let dublicateemail=await userModel.findOne({email:email})
+    if(dublicateemail)
+      return res.status(400).send({status:false,message:"email is already existed"})
+      
     let userdata = await userModel.create(data)
     res.status(201).send({ status: true, message: "Success", data: userdata })
   }
