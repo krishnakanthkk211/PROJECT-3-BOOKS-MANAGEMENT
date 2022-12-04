@@ -5,11 +5,10 @@ const route = require("./routes/route.js")
 
 const app = express()
 app.use(bodyparser.json())
-app.use(bodyparser.urlencoded({ extended: true }))
+
 
 mongoose.connect("mongodb+srv://bookManagement:doreamon@bookmanagecluster.2bamja3.mongodb.net/Group15Database"
     ,
-
     { useNewUrlParser: true })
     .then(() => console.log("Mongodb is connected"))
     .catch((err) => console.log(err))
