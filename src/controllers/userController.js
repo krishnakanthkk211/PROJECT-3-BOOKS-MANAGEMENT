@@ -53,12 +53,18 @@ const createuser = async function (req, res) {
     if (!street) {
       return res.status(400).send({ status: false, message: "street is required" })
     }
+    if (!isEmpty(street))
+      return res.status(400).send({ status: false, message: "street cannot be empty " })
     if (!city) {
       return res.status(400).send({ status: false, message: "city is required" })
     }
+    if (!isEmpty(city))
+      return res.status(400).send({ status: false, message: "city cannot be empty " })
     if (!pincode) {
       return res.status(400).send({ status: false, message: "pincode is required" })
     }
+    if (!isEmpty(pincode))
+      return res.status(400).send({ status: false, message: "pincode cannot be empty " })
     let enums = userModel.schema.obj.title.enum;
     if (!enums.includes(title)) {
       return res.status(400).send({ status: false, message: "Please enter a valid title" })
@@ -82,19 +88,19 @@ const createuser = async function (req, res) {
     if (!isValidpincode(pincode)) {
       return res.status(400).send({ status: false, message: "pincode should be of 6 numeric values" })
     }
-    let dublicateemail = await userModel.findOne({ email: email })
-    if (dublicateemail) {
-      return res.status(400).send({ status: false, message: "email already existed" })
-    }
-    let dublicatephone = await userModel.findOne({ phone: phone })
-    if (dublicatephone) {
-      return res.status(400).send({ status: false, message: "phone already existed" })
-    }
 
+    let dubliempass=await userModel.findOne({$or:[{phone:phone},{email:email}]})
+
+    if(dubliempass.phone==phone)
+       return res.status(400).send({status:false,message:"phone already existed"})
+    if(dubliempass.email==email)
+       return res.status(400).send({status:false,message:"email already existed"})
+  
     let userdata = await userModel.create(data)
     res.status(201).send({ status: true, message: "Success", data: userdata })
   }
-  catch (err) { res.status(500).send({ status: false, message: err.message }) }
+  catch (err)
+   { res.status(500).send({ status: false, message: err.message }) }
 }
 
 

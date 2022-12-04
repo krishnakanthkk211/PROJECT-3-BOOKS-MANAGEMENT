@@ -65,15 +65,12 @@ const createBooks = async function (req, res) {
     if (!isValidISBN(ISBN)) {
       return res.status(400).send({ status: false, msg: "ISBN number is not valid" })
     }
-
-    let duplititle = await bookModel.findOne({ title: title })
-    if (duplititle) {
+    
+    let duplitiisbn=await bookModel.findOne({$or:[{title:title},{ISBN:ISBN}]})
+    if(duplitiisbn.title==title)
       return res.status(400).send({ status: false, message: "title already available" })
-    }
-    let dupliISBN = await bookModel.findOne({ ISBN: ISBN })
-    if (dupliISBN) {
-      return res.status(400).send({ status: false, message: "ISBN already registered" })
-    }
+    if(duplitiisbn.ISBN==ISBN)
+      return res.status(400).send({ status: false, message: "ISBN already available" })
 
     let bookCreated = await bookModel.create(req.body)
     res.status(201).send({ status: true, message: "Success", data: bookCreated })
@@ -88,6 +85,10 @@ const createBooks = async function (req, res) {
 const getbooks = async function (req, res) {
   try {
     let queryParams = req.query
+    
+    // if (!isValidObjectId(req.query.userId)) {
+    //   return res.status(400).send({ status: false, message: "user Id is not valid" })
+    // }
     let { userId, category, subcategory } = queryParams;
     if (!userId && !category && !subcategory) {
       let bookdata = await bookModel.find({ isDeleted: false })
@@ -95,9 +96,7 @@ const getbooks = async function (req, res) {
         return res.status(404).send({ status: false, message: "No Such books Found" })
       return res.status(200).send({ message: "success", data: bookdata })
     }
-    if (!isValidObjectId(userId)) {
-      return res.status(400).send({ status: false, message: "user Id is not valid" })
-    }
+    
     let data = await bookModel.find({ $and: [queryParams, { isDeleted: false }] }).sort({ title: 1 })
       .select({ _id: 1, title: 1, excerpt: 1, userId: 1, category: 1, reviews: 1, releasedAt: 1 })
 

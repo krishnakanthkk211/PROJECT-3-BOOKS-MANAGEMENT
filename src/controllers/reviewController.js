@@ -28,14 +28,18 @@ const createReview = async function (req, res) {
 
         if (review) {
             if (!isEmpty(review)) return res.status(400).send({ status: false, message: "Review is in Invalid Format" })
-            // req.body.review = review.replace(/\s+/g, ' ')
+           
         }
 
         if (!rating) {
             return res.status(400).send({ status: false, message: "Rating is mandatory" })
         }
+        if (rating) {
+            if (!(typeof rating == "number")) {
+                return res.status(400).send({ status: false, message: "Rating should be a number" })}
+            }
         if (!israting(rating)) { return res.status(400).send({ status: false, message: "Rating should be minimum is 1 to maximum is 5" }) }
-
+     
 
         if (!reviewedBy) {
             req.body.reviewedBy = "Guest"
@@ -103,8 +107,14 @@ const updatereview = async function (req, res) {
         if (Object.keys(dataupdating).length == 0) {
             return res.status(400).send({ status: false, message: "Enter the data you want to update" })
         }
+        if (!isValid(reviewedBy)) {
+            return res.status(400).send({ status: false, message: "Your name is in Invalid Format" })
+        }
+        if (rating) {
+            if (!(typeof rating == "number")) {
+                return res.status(400).send({ status: false, message: "Rating should be a number" })}}
         if (!israting(rating))
-            return res.status(400).send({ status: false, message: "rating should br 1 to 5" })
+            return res.status(400).send({ status: false, message: "Rating should be minimum is 1 to maximum is 5" })
 
         let dataupdated = await reviewModel.findOneAndUpdate({ _id: review2, isDeleted: false },
             { $set: { reviewedBy: reviewedBy, rating: rating, review: review } }, { new: true })
