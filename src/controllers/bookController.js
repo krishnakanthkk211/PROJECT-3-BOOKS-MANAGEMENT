@@ -127,7 +127,7 @@ const getbooksParams = async function (req, res) {
     return res.status(200).send({ status: true, message: "success", data: reviewobj })
   }
   catch (err) {
-    return res.status(500).send({ status: false, message: err })
+    return res.status(500).send({ status: false, message: err.message })
   }
 }
 

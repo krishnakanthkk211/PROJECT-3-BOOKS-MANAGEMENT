@@ -148,8 +148,8 @@ const deletereviewById = async function (req, res) {
         if (details.isDeleted)
             return res.status(404).send({ status: false, msg: "review already deleted" })
         let timeStamps = new Date()
-        let reviewdelete = await reviewModel.findOneAndUpdate({ _id: reviewId, isDeleted: false }, { isDeleted: true, deletedAt: timeStamps })
-        data.review -= 1
+         await reviewModel.findOneAndUpdate({ _id: reviewId, isDeleted: false }, { isDeleted: true, deletedAt: timeStamps })
+        data.reviews -= 1
         await data.save()
         res.status(200).send({ status: true, msg: "Review Deleted" })
 

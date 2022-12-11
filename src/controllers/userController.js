@@ -139,7 +139,7 @@ const login = async function (req, res) {
      const tokeniat = new Date(decode.iat * 1000).toLocaleString()
      const tokenexp = new Date(decode.exp * 1000).toLocaleString()
 
-    res.status(201).send({ status: true, message: "User logged in Successfully", data: { token: token, userId: decode.userId, iat: tokeniat, exp: tokenexp } })
+    res.status(200).send({ status: true, message: "User logged in Successfully", data: { token: token, userId: decode.userId, iat: tokeniat, exp: tokenexp } })
   }
 
   catch (err) {

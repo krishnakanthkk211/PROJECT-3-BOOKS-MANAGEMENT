@@ -2,10 +2,12 @@ const express = require("express")
 const { default: mongoose } = require("mongoose")
 const bodyparser = require("body-parser")
 const route = require("./routes/route.js")
+const multer=require("multer")
+const { AppConfig } = require('aws-sdk');
 
 const app = express()
 app.use(bodyparser.json())
-
+app.use(multer().any())
 
 mongoose.connect("mongodb+srv://bookManagement:doreamon@bookmanagecluster.2bamja3.mongodb.net/Group15Database"
     ,
